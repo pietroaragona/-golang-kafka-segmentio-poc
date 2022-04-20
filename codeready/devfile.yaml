@@ -26,6 +26,20 @@ components:
         name: GOPATH
       - value: /tmp/.cache
         name: GOCACHE
+  #
+  # OpenShift
+  #
+  - type: openshift
+    reference: 'https://raw.githubusercontent.com/pietroaragona/golang-kafka-segmentio-poc/main/codeready/kafka-deployment.yml'
+    alias: kafka
+    endpoints:
+      - name: kafka-port
+        port: 9092
+      - name: kafka-ui
+        port: 8888
+        attributes:
+          path: /
+
 commands:
   - name: 1. Build the application
     actions:

@@ -1,0 +1,57 @@
+apiVersion: 1.0.0
+metadata:
+  name: golang-kafka-poc
+projects:  
+  - name: golang-kafka-segmentio-poc
+    source:
+      location: 'https://github.com/pietroaragona/golang-kafka-segmentio-poc.git'
+      type: git  
+components:
+  - id: golang/go/latest
+    preferences:
+      go.lintTool: golangci-lint
+      go.lintFlags: '--fast'
+    type: chePlugin
+    alias: go-plugin
+  - mountSources: true
+    endpoints:
+      - name: 8080-tcp
+        port: 8080
+    memoryLimit: 512Mi
+    type: dockerimage
+    alias: go-cli
+    image: 'registry.redhat.io/codeready-workspaces/stacks-golang-rhel8@sha256:177f531dd9473811a966e9446115b492b1f5ad142dd874ed0104ccdbb2815c99'
+    env:
+      - value: '/projects/.che/gopath:$(CHE_PROJECTS_ROOT)'
+        name: GOPATH
+      - value: /tmp/.cache
+        name: GOCACHE
+commands:
+  - name: 1. Build the application
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/golang-kafka-segmentio-poc'
+        type: exec
+        command: go build
+        component: go-cli
+  - name: 2. Run the application
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/golang-kafka-segmentio-poc'
+        type: exec
+        command: ./golang-kafka-segmentio-poc
+        component: go-cli
+  - name: Debug configuration
+    actions:
+      - referenceContent: |
+          {
+            "version": "0.2.0",
+            "configurations": [
+              {
+                "name": "Debug current file",
+                "type": "go",
+                "request": "launch",
+                "mode": "auto",
+                "program": "${fileDirname}"
+              }
+            ]
+          }
+        type: vscode-launch

@@ -54,7 +54,7 @@ spec:
             mountPath: /var/log/kafka
 
       - name: kafka-ui
-        image: provectuslabs/kafka-ui:0.3.3
+        image: provectuslabs/kafka-ui:0.4.0
         resources:
           limits:
             memory: "1024Mi"

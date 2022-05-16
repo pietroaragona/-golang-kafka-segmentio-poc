@@ -1,6 +1,6 @@
 apiVersion: 1.0.0
 metadata:
-  name: golang-kafka-poc
+  name: golang-kafka-segmentio-poc
 projects:  
   - name: golang-kafka-segmentio-poc
     source:

@@ -9,4 +9,9 @@ tasks:
   - name: Run
     command: go run .
 
+vscode:
+  extensions:
+    - "eamodio.gitlens"
+    - "golang.go"
+
 
